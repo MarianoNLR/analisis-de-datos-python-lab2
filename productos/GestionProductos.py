@@ -67,16 +67,6 @@ class GestionProductos:
         finally:
             if coneccion.is_connected():
                 coneccion.close()       
-        
-    
-    def guardar_datos(self, datos):
-        try:
-            with open(self.archivo, 'w') as archivo:
-                json.dump(datos, archivo, indent=4)
-        except IOError as error:
-            print(f"Error al intentar guardar los datos en el archivo: {error}")
-        except Exception as error:
-            print(f"Error Inesperado: {error}")
     
     # Lee producto por codigo
     def leer_producto(self, codigo_producto):
@@ -121,8 +111,6 @@ class GestionProductos:
                     cursor.execute('INSERT INTO productos (codigo_producto, nombre, precio, stock, marca, categoria) VALUES (%s, %s, %s, %s, %s, %s)', [producto.codigo_producto, producto.nombre, producto.precio, producto.stock, producto.marca, producto.categoria])
                     
                     if isinstance(producto, ProductoAlimenticio):
-                        print(producto.es_libre_gluten)
-                        input("Esperando....")
                         cursor.execute('INSERT INTO productos_alimenticios (codigo_producto, fecha_vencimiento, es_libre_gluten) VALUES (%s, %s, %s)', [producto.codigo_producto, producto.fecha_vencimiento, producto.es_libre_gluten])
                     else:
                         cursor.execute('INSERT INTO productos_electronicos (codigo_producto, color, meses_garantia) VALUES (%s, %s, %s)', [producto.codigo_producto, producto.color, producto.meses_garantia])
