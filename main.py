@@ -34,13 +34,12 @@ def agregar_producto(gestion, opcion_producto):
     categoria = input("Ingrese una categoria para el producto: ")
     
     if opcion_producto == '1':
-        fecha_vencimiento = input("Ingrese la fecha de vencimiento: ")
+        fecha_vencimiento = input("Ingrese la fecha de vencimiento (YYYY/MM/DD): ")
         es_libre_gluten = input("Es libre de gluten (y/n): ")
         while es_libre_gluten != 'y' and es_libre_gluten != 'n':
             print("Opciones invalida. Digite 'y' (si) o 'n' (no)")
             es_libre_gluten = input("Es libre de gluten: y/n")
         es_libre_gluten = 1 if es_libre_gluten == 'y' else 0
-        print(es_libre_gluten)
         try:
             producto = ProductoAlimenticio(codigo_producto, nombre, precio, stock, marca, categoria, fecha_vencimiento, es_libre_gluten)
         except ValueError as error:
@@ -79,18 +78,10 @@ def eliminar_producto(gestion):
 
 def listar_productos(gestion): 
     productos = gestion.leer_productos()
-    print(productos)
     for producto in productos:
         print(producto)
         print("===================================")
     input("Presione Enter para continuar...")
-    # for producto in productos.values():
-    #     if 'fecha_vencimiento' in producto:
-    #         print(f"{ProductoAlimenticio(**producto)}")
-    #     else:
-    #         print(f"{ProductoElectronico(**producto)}")
-    #     print("==========================================")
-    # input("Presione Enter para continuar...")
 
 def actualizar_producto(gestion):
     #Se reutiliza la funcion de buscar por codigo
@@ -143,40 +134,6 @@ def actualizar_producto(gestion):
         print("-----------------------------------------------")
         print(f"Campo a actualizar: {campo[1]}")
         valor = input(f"Nuevo {campo[1]}: ")
-        '''
-        #     opcion_valida = True
-        # if opcion == '1':
-        #     campo = "nombre"
-        #     opcion_valida = True
-        # if opcion == '2':
-        #     campo = "precio"
-        #     opcion_valida = True
-        # if opcion == '3':
-        #     campo = "stock"
-        #     opcion_valida = True
-        # if opcion == '4':
-        #     campo = "marca"
-        #     opcion_valida = True
-        # if opcion == '5':
-        #     campo = "categoria"
-        #     opcion_valida = True
-        # if opcion == '6':
-        #     if 'fecha_vencimiento' in producto:
-        #         campo = "fecha_vencimiento"
-        #     else:
-        #         campo = "color"
-        # if opcion == '7':
-        #     if 'fecha_vencimiento' in producto:
-        #         campo = "es_libre_gluten"
-        #     else:
-        #         campo = "meses_garantia"
-        #     opcion_valida = True
-        # if opcion == '8':
-        #     break
-        
-        # if not opcion_valida:
-        #     print("Ingrese una opcion valida.")
-        '''
         gestion.actualizar_producto(producto.codigo_producto, campo, valor)
         input("Presione Enter para continuar...")
 
