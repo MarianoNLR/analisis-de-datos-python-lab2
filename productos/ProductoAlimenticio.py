@@ -32,14 +32,15 @@ class ProductoAlimenticio(Producto):
     
     def validar_fecha_vencimiento(self, fecha):
         try:
-            objeto_fecha = datetime.datetime.strptime(fecha, "%d/%m/%Y").date()
-            if objeto_fecha <= datetime.datetime.now().date():
-                raise ValueError(f"La fecha de vencimiento debe ser mayor a la fecha actual!")
+            if not isinstance(fecha, datetime.date):
+                objeto_fecha = datetime.datetime.strptime(fecha, "%Y/%m/%d").date()
+                if objeto_fecha <= datetime.datetime.now().date():
+                    raise ValueError(f"La fecha de vencimiento debe ser mayor a la fecha actual!")
             return fecha
         except ValueError as error:
-            raise ValueError(f"Error al cargar la fecha de vencimiento: La fecha se debe ingresar con el formato DD/MM/YYYY")
+            raise ValueError(f"Error al cargar la fecha de vencimiento.")
         except Exception as error:
-            raise Exception(f"Ocurrio un error al ingresar la fecha de vencimiento")
+            raise Exception(f"Ocurrio un error al ingresar la fecha de vencimiento: {error}")
     
     def to_dict(self):
         data = super().to_dict()
