@@ -4,7 +4,7 @@ from productos.Producto import Producto
 from productos.ProductoAlimenticio import ProductoAlimenticio
 from productos.ProductoElectronico import ProductoElectronico
 import mysql.connector
-from mysql.connector import Error
+from mysql.connector import Error, IntegrityError
 from decouple import config
 
 class GestionProductos:
@@ -92,8 +92,7 @@ class GestionProductos:
                             producto_data['meses_garantia'] = productoElectronico['meses_garantia']
                             producto = ProductoElectronico(**producto_data)
                     else:
-                        return
-                    
+                        raise ValueError(f"No se ha encontrado un producto con el código {codigo_producto}") 
                     return producto
         except Exception as e:
             print(f'Error al obtener el producto: {e}')
@@ -117,6 +116,8 @@ class GestionProductos:
                     
                     coneccion.commit()
                     print('Producto Agregado Correctamente!')
+        except IntegrityError as e:
+            print(f"Ya existe un producto con el código: {producto.codigo_producto}!")
         except Exception as e:
             coneccion.rollback()
             print(f'Error Inesperado al guardar el producto: {e}')
