@@ -172,11 +172,12 @@ if __name__ == "__main__":
         if opcion == '1' or opcion == '2':
             agregar_producto(gestion, opcion)
         elif opcion == '3':
-            producto_datos = buscar_producto_por_codigo(gestion)
-            mensaje_consola = ""
-            mensaje_consola += f"""{producto_datos}
+            producto_datos = buscar_producto_por_codigo(gestion) 
+            if producto_datos is not None:   
+                mensaje_consola = ""
+                mensaje_consola += f"""{producto_datos}
 =========================================="""
-            print(mensaje_consola)
+                print(mensaje_consola)
             input("Presione Enter para continuar...")
         elif opcion == '4':
             actualizar_producto(gestion)
