@@ -179,6 +179,7 @@ class GestionProductos:
         except Exception as e:
             print(f'Error inesperado al actualizar producto. {e}')
         else:
+            print("Producto Actualizado correctamente.")
             return producto
         finally:
             if coneccion.is_connected():
